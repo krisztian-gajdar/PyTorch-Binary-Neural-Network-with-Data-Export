@@ -1,6 +1,6 @@
 ## PyTorch Binary Neural Network with Data Export
 
-Source code used in my research concerning Logical Formalization of Binary Neural Neutworks. It is the reproduction of methods used in the resarch: [Verifying Properties of Binarized Deep Neural Networks
+Source code used in my research concerning Logical Formalization of Binary Neural Neutworks. It is the reproduction of methods used in the research: [Verifying Properties of Binarized Deep Neural Networks
 ](https://arxiv.org/abs/1709.06662)
 
 ### Features
@@ -10,6 +10,13 @@ Source code used in my research concerning Logical Formalization of Binary Neura
 	 - Biases
 	 - Running Mean
 	 - Standard Deviation
+	 
+### Environment Details
+ - Anaconda 3
+ - Python 3.6.8
+ - PyTorch 1.0.0
+ - CUDA 10.0
+ - Spyder 3.3.2 *(IDE)*
 
 ### Installation
  1. Clone repository
