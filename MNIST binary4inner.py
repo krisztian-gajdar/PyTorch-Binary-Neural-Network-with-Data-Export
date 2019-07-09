@@ -18,7 +18,7 @@ parser.add_argument('--batch-size', type=int, default=256, metavar='N',
 parser.add_argument('--test-batch-size', type=int, default=1000, metavar='N',
                     help='input batch size for testing (default: 1000)')
 
-parser.add_argument('--epochs', type=int, default=1, metavar='N',
+parser.add_argument('--epochs', type=int, default=10, metavar='N',
                     help='number of epochs to train (default: 10)')
 
 parser.add_argument('--lr', type=float, default=0.001, metavar='LR',
@@ -65,12 +65,28 @@ test_loader = torch.utils.data.DataLoader(mnist_testset, batch_size=args.test_ba
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(784, 2048)
-        self.bn1 = nn.BatchNorm1d(2048)
+        self.fc1 = nn.Linear(784, 200)
+        self.bn1 = nn.BatchNorm1d(200)
         self.htanh1 = nn.Hardtanh()
         self.bin1 = BinarizeSign()
         
-        self.fc2 = nn.Linear(2048, 10)
+        self.fc2 = nn.Linear(200, 100)
+        self.bn2 = nn.BatchNorm1d(100)
+        self.htanh2 = nn.Hardtanh()
+        self.bin2 = BinarizeSign()
+        
+        self.fc3 = nn.Linear(100, 100)
+        self.bn3 = nn.BatchNorm1d(100)
+        self.htanh3 = nn.Hardtanh()
+        self.bin3 = BinarizeSign()
+        
+        self.fc4 = nn.Linear(100, 100)
+        self.bn4 = nn.BatchNorm1d(100)
+        self.htanh4 = nn.Hardtanh()
+        self.bin4 = BinarizeSign()
+
+        
+        self.fc5 = nn.Linear(100, 10)
         self.logsoftmax=nn.LogSoftmax(dim=1)
 
     def forward(self, x):
@@ -84,6 +100,24 @@ class Net(nn.Module):
         
         x = self.fc2(x)
         self.fc2.weight.data=Binarize(self.fc2.weight.data)
+        x = self.bn2(x)
+        x = self.htanh2(x)
+        x = self.bin2(x)
+        
+        x = self.fc3(x)
+        self.fc3.weight.data=Binarize(self.fc3.weight.data)
+        x = self.bn3(x)
+        x = self.htanh3(x)
+        x = self.bin3(x)
+        
+        x = self.fc4(x)
+        self.fc4.weight.data=Binarize(self.fc4.weight.data)
+        x = self.bn4(x)
+        x = self.htanh4(x)
+        x = self.bin4(x)
+        
+        x = self.fc5(x)
+        self.fc5.weight.data=Binarize(self.fc5.weight.data)
         return self.logsoftmax(x)
 
 
@@ -162,11 +196,17 @@ np.set_printoptions(threshold=np.nan)
 print("--Start of Running Mean Export")
 open('output/mean.txt', 'w').close()
 print(model.bn1.running_mean.cpu().detach().numpy(), file=open("output/mean.txt", "a"))
+print(model.bn2.running_mean.cpu().detach().numpy(), file=open("output/mean.txt", "a"))
+print(model.bn3.running_mean.cpu().detach().numpy(), file=open("output/mean.txt", "a"))
+print(model.bn4.running_mean.cpu().detach().numpy(), file=open("output/mean.txt", "a"))
 print("--End of Running Mean Export")
 
 print("--Start of Standard Deviation Export")
 open('output/std.txt', 'w').close()
 print(np.sqrt(model.bn1.running_var.cpu().detach().numpy()), file=open("output/std.txt", "a"))
+print(np.sqrt(model.bn2.running_var.cpu().detach().numpy()), file=open("output/std.txt", "a"))
+print(np.sqrt(model.bn3.running_var.cpu().detach().numpy()), file=open("output/std.txt", "a"))
+print(np.sqrt(model.bn4.running_var.cpu().detach().numpy()), file=open("output/std.txt", "a"))
 print("--End of Running Mean Export")
 
 print("--Start of Weight Export")
