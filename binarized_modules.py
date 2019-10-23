@@ -1,7 +1,10 @@
+import torch
 import torch.nn as nn
 
 def Binarize(tensor,quant_mode='det'):
-        return tensor.sign()
+        tensor = torch.where(tensor==0,torch.tensor(1.).cuda(),tensor)
+        tensor = tensor.sign()
+        return tensor
     
 class BinarizeSign(nn.Module):
 
@@ -21,12 +24,13 @@ class BinarizeLinear(nn.Linear):
 
     def forward(self, input):
 
-        out = nn.functional.linear(input, self.weight)
+        if input.size(1) != 784:
+            input.data=Binarize(input.data)
         if not hasattr(self.weight,'org'):
             self.weight.org=self.weight.data.clone()
         self.weight.data=Binarize(self.weight.org)
+        out = nn.functional.linear(input, self.weight)
         if not self.bias is None:
             self.bias.org=self.bias.data.clone()
             out += self.bias.view(1, -1).expand_as(out)
-
         return out
