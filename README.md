@@ -16,7 +16,6 @@ Source code used in my research concerning Logical Formalization of Binary Neura
  - Python 3.6.8
  - PyTorch 1.0.0
  - CUDA 10.0
- - Spyder 3.3.2 *(IDE)*
 
 ### Installation
  1. Clone repository
@@ -24,28 +23,3 @@ Source code used in my research concerning Logical Formalization of Binary Neura
  3. [Import](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file) enviroment in Anaconda from other/environment.yml
  4. Install [CUDA](https://developer.nvidia.com/cuda-10.0-download-archive) *(for GPU Support)*
  5. Run program
-
-### Exportation
-Exportation happens automatically after Test phase.
-The code of exportation is at the end of the main py. 
-Comment out unnecessary lines.
-
-### Exported File Structure
-**mean.txt:**
-[µ] BatchNorm.RunningMean
-
-**std.txt:**
-[σ] BatchNorm.RunningVariance.SquareRoot
-
-**weights.txt:**
-[A] InnerLinearization.Weight
-[α] BatchNorm.Weight - BatchNorm.Scale
-[A] OutputLinearization.Weight
-
-**biases.txt:**
-[b] InnerLinearization.Bias
-[γ]	BatchNorm.Bias - BatchNorm.Shift
-[b] OutputLinearization.Bias
-
-
-#### *All of this was created under the supervision of Dr. Kovásznai Gergely.*
