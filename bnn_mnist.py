@@ -15,7 +15,7 @@ parser.add_argument('--batch-size', type=int, default=256, metavar='N')
                     
 parser.add_argument('--test-batch-size', type=int, default=1000, metavar='N')
                     
-parser.add_argument('--epochs', type=int, default=1, metavar='N')
+parser.add_argument('--epochs', type=int, default=10, metavar='N')
                     
 parser.add_argument('--lr', type=float, default=0.01, metavar='LR')
                     
